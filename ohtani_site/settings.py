@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'baseball_app', #アプリ追加
-    #'rest_framework',#REST frameworkという外部のライブラリを利用するためのアプリを追加
+    'rest_framework',#REST frameworkという外部のライブラリを利用するためのアプリを追加
 ]
 
 MIDDLEWARE = [
