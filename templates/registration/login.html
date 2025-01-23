@@ -1,0 +1,13 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}  <!-- 基本テンプレートを継承 -->
+
+{% block title %}Login - Ohtani Site{% endblock %}  <!-- ページタイトル -->
+
+{% block content %}  <!-- コンテンツブロック開始 -->
+<h2>Login</h2>  <!-- 見出し -->
+<form method="post">  <!-- POSTメソッドのフォーム -->
+    {% csrf_token %}  <!-- CSRFトークン -->
+    {{ form.as_p }}  <!-- フォームを段落形式で表示 -->
+    <button type="submit" class="btn btn-primary">Login</button>  <!-- ログインボタン -->
+</form>  <!-- フォーム終了 -->
+{% endblock %}  <!-- コンテンツブロック終了 -->

@@ -1,0 +1,13 @@
+<!-- baseball_app/templates/baseball_app/index.html -->
+{% extends 'base.html' %}  <!-- 'base.html'テンプレートを拡張し、共通のレイアウトを使用 -->
+
+{% block title %}Home - Ohtani Site{% endblock %}  <!-- 'title'ブロックをオーバーライドし、ページタイトルを「Home - Ohtani Site」に設定 -->
+
+{% block content %}  <!-- 'content'ブロックを開始。ここにページ固有の内容を記述 -->
+<div class="text-center">  <!-- Bootstrapのクラスを使用して、内容を中央揃えにする -->
+    <h2>Welcome to Ohtani Site!</h2>  <!-- サイトのウェルカムメッセージを表示 -->
+    <p>This site is dedicated to Shohei Ohtani's amazing baseball journey!</p>  <!-- サイトの目的を説明するテキスト -->
+    <img src="{{ MEDIA_URL }}ohtani_trout.jpg" alt="Ohtani and Trout" class="img-fluid">   <!-- 画像を表示。'img-fluid'クラスでレスポンシブデザインを適用 -->
+</div>
+{% endblock %}  <!-- 'content'ブロックの終了 -->
+

@@ -1,0 +1,42 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>  <!-- HTML5文書であることを宣言 -->
+<html lang="ja">  <!-- 言語を日本語に設定 -->
+<head>
+    <meta charset="UTF-8">  <!-- 文字エンコーディングをUTF-8に設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- レスポンシブデザインのためのビューポート設定 -->
+    <title>{% block title %}Ohtani Site{% endblock %}</title>  <!-- ページタイトルをブロックで定義 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">  <!-- BootstrapのCSSを読み込み -->
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="bg-dark text-white py-3">  <!-- 背景がダークで白文字のヘッダー -->
+        <div class="container">  <!-- コンテナで内容を中央に配置 -->
+            <nav class="d-flex justify-content-between align-items-center">  <!-- フレックスボックスでナビゲーションを配置 -->
+                <h1 class="h4">Ohtani Site</h1>  <!-- サイトのタイトル -->
+                <ul class="nav">  <!-- ナビゲーションメニューのリスト -->
+                    <li class="nav-item"><a href="{% url 'baseball_app:index' %}" class="nav-link text-white">Home</a></li>  <!-- ホームページへのリンク -->
+                    <li class="nav-item"><a href="{% url 'baseball_app:player_profile' %}" class="nav-link text-white">Profile</a></li>  <!-- プロフィールページへのリンク -->
+                    <li class="nav-item"><a href="{% url 'baseball_app:baseball_basics' %}" class="nav-link text-white">Basics</a></li>  <!-- 野球の基本ページへのリンク -->
+                    <li class="nav-item"><a href="{% url 'baseball_app:contact' %}" class="nav-link text-white">Contact</a></li>  <!-- お問い合わせページへのリンク -->
+                    {% if user.is_authenticated %}  <!-- ユーザーが認証されているか確認 -->
+                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link text-white">Logout</a></li>  <!-- ログアウトリンク -->
+                    {% else %}  <!-- ユーザーが認証されていない場合 -->
+                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link text-white">Login</a></li>  <!-- ログインリンク -->
+                        <li class="nav-item"><a href="{% url 'signup' %}" class="nav-link text-white">Signup</a></li>  <!-- サインアップリンク -->
+                    {% endif %}  <!-- 条件分岐の終了 -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container my-4">  <!-- メインコンテンツエリア -->
+        {% block content %}{% endblock %}  <!-- コンテンツを挿入するためのブロック -->
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-dark text-white text-center py-3">  <!-- 背景がダークで白文字のフッター -->
+        <p>© 2025 Ohtani Site. All rights reserved.</p>  <!-- 著作権表示 -->
+    </footer>
+</body>
+</html>

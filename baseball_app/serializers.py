@@ -2,9 +2,8 @@
 # デシリアライズ（逆序列化）するためのクラス を定義するファイルです。
 
 #モデルのデータをJSON形式に変換するため
-"""""
 from rest_framework import serializers
-from .models import pip install requests beautifulsoup4
+from .models import Player, BattingStats, PitchingStats
 
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,4 +19,3 @@ class PitchingStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PitchingStats
         fields = '__all__'      
-        """
