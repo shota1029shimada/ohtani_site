@@ -1,13 +1,94 @@
-<!-- baseball_app/templates/baseball_app/index.html -->
-{% extends 'base.html' %}  <!-- 'base.html'テンプレートを拡張し、共通のレイアウトを使用 -->
+{% extends 'base.html' %}
 
-{% block title %}Home - Ohtani Site{% endblock %}  <!-- 'title'ブロックをオーバーライドし、ページタイトルを「Home - Ohtani Site」に設定 -->
+{% block title %}Home - Ohtani Site{% endblock %}
 
-{% block content %}  <!-- 'content'ブロックを開始。ここにページ固有の内容を記述 -->
-<div class="text-center">  <!-- Bootstrapのクラスを使用して、内容を中央揃えにする -->
-    <h2>Welcome to Ohtani Site!</h2>  <!-- サイトのウェルカムメッセージを表示 -->
-    <p>This site is dedicated to Shohei Ohtani's amazing baseball journey!</p>  <!-- サイトの目的を説明するテキスト -->
-    <img src="{{ MEDIA_URL }}ohtani_trout.jpg" alt="Ohtani and Trout" class="img-fluid">   <!-- 画像を表示。'img-fluid'クラスでレスポンシブデザインを適用 -->
+{% block content %}
+<!-- コンテンツ部分の開始 -->
+
+<div class="text-center py-5 bg-light">
+    <!-- ページの最初に表示されるウェルカムセクション -->
+    <h2 class="display-4">Welcome to Ohtani Site!</h2>
+    <!-- サイトのタイトル -->
+    <p class="lead">This site is dedicated to Shohei Ohtani's amazing baseball journey!</p>
+    <!-- サイトの説明文 -->
+    <img src="{{ MEDIA_URL }}ohtani_japan.jpg" 
+    alt="Ohtani and Trout" 
+    class="img-fluid shadow rounded" 
+    style="max-width: 80%; height: auto;">
+    <!-- 大谷翔平選手の画像を表示 -->
 </div>
-{% endblock %}  <!-- 'content'ブロックの終了 -->
 
+<!-- サイト概要セクション(コンテンツをリスト形式で紹介)-->
+<section class="site-overview py-5 bg-white">
+    <!-- サイトの概要部分 -->
+    <div class="container">
+        <!-- セクションの中央揃えでレイアウト -->
+        <h2 class="text-center mb-4">このサイトについて</h2><!-- サイトの概要見出し -->
+        <p class="text-muted text-center">
+            <!-- サイトの目的や内容についての説明 -->
+            このサイトは、大谷翔平選手の情報と野球の魅力を幅広い方に伝えることを目的としています。
+            野球初心者から熱心なファン、大谷選手に興味を持つ方まで、どなたでも楽しめる内容を目指しました。
+        </p>
+
+        <div class="row mt-5">
+            <!-- 2つのカラム（列）を作成 -->
+            <div class="col-md-6">
+                <!-- 左カラム -->
+                <h3>各ページでできること</h3>
+                <!-- サイトで提供する機能のリスト -->
+                <ul class="list-unstyled">
+                    <li><strong>プロフィール:</strong> 大谷翔平選手の基本情報や二刀流の魅力、過去の成績をチェックできます。</li>
+                    <li><strong>野球の基礎:</strong> 野球のルールやポジション解説を通じて、初心者でも理解しやすい野球の基礎知識を学べます。</li>
+                    <li><strong>ニュース:</strong> 大谷選手や野球界の最新ニュースをお届けします。</li>
+                    <li><strong>ハイライト:</strong> 試合の名場面や注目プレイを写真や動画で楽しめます。</li>
+                    <li><strong>コンタクト:</strong> 大谷選手への応援メッセージや質問を送信することができます。</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- 右カラム -->
+                <h3>ターゲット層</h3>
+                <!-- このサイトが想定するターゲット層 -->
+                <p>
+                    <i class="bi bi-person"></i> 野球初心者やこれから野球を楽しみたい方<br>
+                    <i class="bi bi-person-fill"></i> 大谷翔平選手に興味がある方<br>
+                    <i class="bi bi-people-fill"></i> 大谷選手の活躍をより深く知りたいファン
+                </p>
+                <h3>目的</h3>
+                <!-- このサイトの全体的な目標 -->
+                <p>
+                    このサイトを通じて、大谷翔平選手の魅力だけでなく、野球の楽しさや感動を伝え、
+                    多くの方に野球を好きになってもらうことを目指します。
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 外部リンク -->
+<section class="py-5 bg-light">
+    <!-- 外部リンクセクション -->
+    <div class="container text-center">
+        <h5 class="mb-4">大谷選手をさらに知るためのリンク</h5>
+        <!-- 外部リンクの見出し -->
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <!-- 外部リンクを複数配置 -->
+            <a href="https://www.olympics.com/ja/athletes/shohei-ohtani" 
+            target="_blank" 
+            class="btn btn-outline-primary d-flex align-items-center gap-2">
+                <i class="bi bi-trophy-fill"></i> Olympics<!-- オリンピック公式リンク -->
+            </a>  
+            <a href="https://www.instagram.com/accounts/login/?next=%2Fshoheiohtani%2F&source=omni_redirect" 
+            target="_blank" 
+            class="btn btn-outline-danger d-flex align-items-center gap-2">
+                <i class="bi bi-instagram"></i> Instagram<!-- Instagram公式リンク -->
+            </a>
+            <a href="https://www.mlb.com/player/shohei-ohtani-660271" 
+            target="_blank" 
+            class="btn btn-outline-success d-flex align-items-center gap-2">
+                <i class="bi bi-globe"></i> MLB公式情報<!-- MLB公式サイトリンク -->
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+<!-- コンテンツブロックの終了 -->
