@@ -1,9 +1,66 @@
-<!-- baseball_app/templates/baseball_app/baseball_basics.html -->
 {% extends 'base.html' %}
 
-{% block title %}Baseball Basics - Ohtani Site{% endblock %}
+{% block title %}野球の基礎解説{% endblock %}
 
 {% block content %}
-<h2>Baseball Basics</h2>
-<p>Learn about the rules and positions of baseball here!</p>
+<div class="container my-5">
+    <h1 class="text-center mb-4">野球の基礎解説</h1>
+
+    <!-- Section: 野球のルール解説 -->
+    <section class="mb-5">
+        <h2 class="h4">野球のルール解説</h2>
+        <p>
+            野球は2つのチームが交互に攻撃と守備を行い、得点を競い合うスポーツです。攻撃側は打者がピッチャーから投げられたボールを打ち、塁を回って得点を目指します。守備側は、打者やランナーをアウトにすることで攻撃を阻止します。
+        </p>
+        <p>
+            試合は通常9回で構成されており、各回で両チームが1回ずつ攻撃を行います。攻撃中のチームがより多く得点を挙げた場合、そのチームが勝利します。
+        </p>
+    </section>
+
+    <!-- Section: ポジション解説 -->
+    <section class="mb-5">
+        <h2 class="h4">ポジション解説</h2>
+        <p>野球には9つのポジションがあります。それぞれの役割を簡単に説明します。</p>
+
+        <!-- 野球場のポジション図 -->
+        <div class="text-center mb-3">
+            <img src="{{ MEDIA_URL }}baseball_position.jpeg" alt="野球場のポジション図" class="img-fluid">
+            <!-- この画像ファイルは "static/images" フォルダに配置します -->
+        </div>
+
+        <!-- ポジション詳細 -->
+        <ul>
+            <li><strong>ピッチャー (投手):</strong> ボールを投げて打者をアウトにします。</li>
+            <li><strong>キャッチャー (捕手):</strong> ピッチャーのボールを受け取り、守備全体を指揮します。</li>
+            <li><strong>一塁手:</strong> 一塁を守り、打者をアウトにします。</li>
+            <li><strong>二塁手:</strong> 二塁を守り、守備範囲が広いポジションです。</li>
+            <li><strong>三塁手:</strong> 三塁を守り、素早い反応が求められます。</li>
+            <li><strong>遊撃手 (ショート):</strong> 二塁と三塁の間を守る、守備の要です。</li>
+            <li><strong>外野手:</strong> ライト、センター、レフトの3ポジションがあり、外野全体をカバーします。</li>
+        </ul>
+    </section>
+
+    <!-- Section: 楽しみ方一覧 -->
+    <section>
+        <h2 class="h4">楽しみ方一覧</h2>
+        <p>野球観戦をもっと楽しむための便利な情報を集めました。</p>
+        <ul>
+            <li>
+                <a href="https://pacificleague.com/news/60543" target="_blank">
+                    野球観戦の持ち物リスト
+                </a> - 野球観戦に必要なアイテムをチェック。
+            </li>
+            <li>
+                <a href="https://baseball.yahoo.co.jp/npb/schedule/" target="_blank">
+                    試合日程確認サイト
+                </a> - お気に入りのチームの試合スケジュールを確認できます。
+            </li>
+            <li>
+                <a href="https://npb.jp/stadium/franchise.html" target="_blank">
+                    野球場ガイド
+                </a> - 日本各地の野球場情報を掲載。
+            </li>
+        </ul>
+    </section>
+</div>
 {% endblock %}

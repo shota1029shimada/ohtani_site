@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth import login
 
@@ -26,9 +26,23 @@ class PitchingStatsViewSet(ModelViewSet):
 def index(request):
     return render(request, 'baseball_app/index.html')
 
+# 選手プロフィール用ビュー
 def player_profile(request):
-    return render(request, 'baseball_app/player_profile.html')
+    # プレイヤーデータを取得 (大谷選手を例として取得)
+    player = get_object_or_404(Player, player_name="大谷翔平")
 
+    # プレイヤーに関連する打者成績と投手成績を取得
+    batting_stats = BattingStats.objects.filter(player=player).order_by("-year")
+    pitching_stats = PitchingStats.objects.filter(player=player).order_by("-year")
+
+    # テンプレートに渡すコンテキストデータ
+    context = {
+        "player": player,
+        "batting_stats": batting_stats,
+        "pitching_stats": pitching_stats,
+    }
+
+    return render(request, "baseball_app/player_profile.html", context)
 def baseball_basics(request):
     return render(request, 'baseball_app/baseball_basics.html')
 

@@ -1,3 +1,4 @@
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
@@ -81,7 +82,7 @@ class PitchingStats(models.Model):
     runs_allowed = models.IntegerField()  # 失点
     earned_runs = models.IntegerField()  # 自責点
     k_bb_ratio = models.DecimalField(max_digits=7, decimal_places=2)  # K/BB
-    whip = models.DecimalField(max_digits=5, decimal_places=2)  # WHIP
+    whip = models.DecimalField(max_digits=5, decimal_places=3)  # WHIP
     class Meta:
         unique_together = ('player', 'year')  # playerとyearの組み合わせをユニークにする
 

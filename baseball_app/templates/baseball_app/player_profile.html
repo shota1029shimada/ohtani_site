@@ -1,12 +1,275 @@
-<!-- baseball_app/templates/baseball_app/index.html -->
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Home - Ohtani Site{% endblock %}
+{% block title %}Player Profile - Ohtani Site{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <h2>Welcome to Ohtani Site!</h2>
-    <p>This site is dedicated to Shohei Ohtani's amazing baseball journey!</p>
-    <img src="https://via.placeholder.com/600x300" alt="Ohtani and Trout" class="img-fluid">
+<!--ここから "base.html" の content ブロックに固有のコンテンツを挿入-->
+<div class="container my-5">
+<!-- Bootstrapのcontainerクラスを使って、ページ全体の余白を設定 -->
+
+    <!-- Player Introduction Section -->
+    <div class="row align-items-center"> <!-- 行全体を定義し、中央揃えで整列 -->
+        <!-- Left: Player Image -->
+        <div class="col-md-6 text-center"> <!-- 画像部分を左寄せし、中央揃え -->
+            <!-- 選手の画像を表示。MEDIA_URLを使って画像ファイルのURLを取得 -->
+            <!-- "img-fluid"➡️レスポンシブ対応"rounded-circle"➡️画像を丸く表示-->
+            <img src="{{ MEDIA_URL }}ohtani_japan.jpeg"  
+            alt="大谷翔平" 
+            class="img-fluid rounded-circle" 
+            style="max-width: 600px;">
+        </div>
+
+        <!-- Right: Player Basic Info -->
+        <div class="col-md-6"><!-- 選手の基本情報を表示するための右カラム -->
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    <h2 class="h4 mb-0">大谷翔平選手の基本情報</h2>
+                </div>
+                <div class="card-body"><!-- 選手情報を表形式で表示 -->
+                    <table class="table table-bordered text-white">
+                        <tbody>
+                            <tr>
+                                <th>名前</th>
+                                <td>{{ player.player_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>所属チーム</th>
+                                <td>{{ player.team_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>ポジション</th>
+                                <td>{{ player.position }}</td>
+                            </tr>
+                            <tr>
+                                <th>背番号</th>
+                                <td>{{ player.jersey_number }}</td>
+                            </tr>
+                            <tr>
+                                <th>出身地</th>
+                                <td>{{ player.birthplace }}</td>
+                            </tr>
+                            <tr>
+                                <th>誕生日</th>
+                                <td>{{ player.birthday|date:"Y年m月d日" }}</td>
+                            </tr>
+                            <tr>
+                                <th>身長</th>
+                                <td>{{ player.height }} cm</td>
+                            </tr>
+                            <tr>
+                                <th>体重</th>
+                                <td>{{ player.weight }} kg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Player Introduction -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <!-- セクション見出し -->
+            <h2 class="h4 mb-0">大谷翔平選手の紹介と魅力</h2>
+        </div>
+        <div class="card-body">
+            <p class="mb-3"><!-- 紹介文1: 大谷選手の経歴と活躍 -->
+                大谷翔平選手は、メジャーリーグベースボール（MLB）で活躍する二刀流選手として知られています。
+                日本の岩手県奥州市出身で、北海道日本ハムファイターズでの輝かしいキャリアを経て、
+                現在はアメリカの<strong>{{ player.team_name }}</strong>でその才能を世界に示しています。
+            </p>
+            <p class="mb-3">  <!-- 紹介文2: 投手としての特徴 -->
+                投手としては160キロを超える剛速球と多彩な変化球を武器に、打者を翻弄するその姿は圧巻です。
+                防御率や奪三振数はリーグでもトップクラスで、特にピンチでの勝負強さが際立っています。
+            </p>
+            <p class="mb-3"><!-- 紹介文3: 打者としての特徴 -->
+                一方で、打者としても非凡な才能を発揮しています。ホームランの飛距離は驚異的で、
+                打率・長打率ともに非常に高い水準を維持しています。<strong>2021年シーズン</strong>には、
+                投手として9勝、打者として46本の本塁打を記録し、前代未聞の二刀流としてMVPに選出されました。
+            </p>
+            <p> <!-- 紹介文4: 大谷選手の人柄 -->
+                大谷選手の凄さは、単なる成績だけでは語り尽くせません。チームプレーを重視する姿勢や、
+                常に謙虚で努力を惜しまない人柄は、多くのファンに感動と勇気を与えています。
+                彼の活躍は、野球という枠を超えて、世界中の人々にインスピレーションを与えています。
+            </p>
+        </div>
+    </div>
+
+    <!-- Tabs for Batting and Pitching Stats -->
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h2 class="h4 mb-0">成績データ</h2>
+        </div>
+        <div class="card-body">
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs" id="statsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <!--class=nav-link active➡️Bootstrapのタブ機能を有効にするクラス-->
+                    <!--data-bs-toggle="tab"➡️タブが切り替わる動作が有効 -->
+                    <!--id="batting-tab" と　aria-controls="batting"➡️タブと表示コンテンツを関連付ける-->
+                    <button 
+                    class="nav-link active" 
+                    id="batting-tab" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#batting" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="batting" 
+                    aria-selected="true">
+                        打者成績
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button 
+                    class="nav-link" 
+                    id="pitching-tab" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#pitching" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="pitching" 
+                    aria-selected="false">
+                        投手成績
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div 
+            class="tab-content mt-4" 
+            id="statsTabsContent">
+            <!--class="tab-content"➡️タブの切り替え対象となるエリアを定義-->
+                <!-- Batting Stats -->
+                <div 
+                class="tab-pane fade show active" 
+                id="batting" 
+                role="tabpanel" 
+                aria-labelledby="batting-tab">
+                <!--class="tab-pane"➡️個別のタブコンテンツを表す-->
+                    <h3 class="h5">打者成績</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>年度</th>
+                                <th>チーム</th>
+                                <th>打率</th>
+                                <th>試合数</th>
+                                <th>打数</th>
+                                <th>安打</th>
+                                <th>二塁打</th>
+                                <th>三塁打</th>
+                                <th>本塁打</th>
+                                <th>塁打数</th>
+                                <th>打点</th>
+                                <th>得点</th>
+                                <th>三振</th>
+                                <th>四球</th>
+                                <th>死球</th>
+                                <th>犠打</th>
+                                <th>犠飛</th>
+                                <th>盗塁</th>
+                                <th>出塁率</th>
+                                <th>長打率</th>
+                                <th>OPS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stat in player.batting_stats.all %}
+                            <tr>
+                                <td>{{ stat.year }}</td>
+                                <td>{{ stat.team_name }}</td>
+                                <td>{{ stat.avg }}</td>
+                                <td>{{ stat.games }}</td>
+                                <td>{{ stat.at_bats }}</td>
+                                <td>{{ stat.hits }}</td>
+                                <td>{{ stat.doubles }}</td>
+                                <td>{{ stat.triples }}</td>
+                                <td>{{ stat.home_runs }}</td>
+                                <td>{{ stat.total_bases }}</td>
+                                <td>{{ stat.runs_batted_in }}</td>
+                                <td>{{ stat.runs_scored }}</td>
+                                <td>{{ stat.strikeouts }}</td>
+                                <td>{{ stat.walks }}</td>
+                                <td>{{ stat.hit_by_pitch }}</td>
+                                <td>{{ stat.sacrifices }}</td>
+                                <td>{{ stat.sacrifice_flies }}</td>
+                                <td>{{ stat.stolen_bases }}</td>
+                                <td>{{ stat.on_base_percentage }}</td>
+                                <td>{{ stat.slugging_percentage }}</td>
+                                <td>{{ stat.OPS }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pitching Stats -->
+                <div class="tab-pane fade" 
+                id="pitching" 
+                role="tabpanel" 
+                aria-labelledby="pitching-tab">
+                    <h3 class="h5">投手成績</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>年度</th>
+                                <th>チーム</th>
+                                <th>防御率</th>
+                                <th>登板</th>
+                                <th>完投</th>
+                                <th>完封</th>
+                                <th>勝利</th>
+                                <th>敗戦</th>
+                                <th>セーブ</th>
+                                <th>勝率</th>
+                                <th>投球回</th>
+                                <th>被安打</th>
+                                <th>被本塁打</th>
+                                <th>奪三振</th>
+                                <th>奪三振率</th>
+                                <th>与四球</th>
+                                <th>与死球</th>
+                                <th>暴投</th>
+                                <th>ボーク</th>
+                                <th>失点</th>
+                                <th>自責点</th>
+                                <th>K/BB</th>
+                                <th>WHIP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stat in player.pitching_stats.all %}
+                            <tr>
+                                <td>{{ stat.year }}</td>
+                                <td>{{ stat.team_name }}</td><!--チーム名-->
+                                <td>{{ stat.era }}</td>
+                                <td>{{ stat.appearances }}</td><!--登板-->
+                                <td>{{ stat.complete_games }}</td>
+                                <td>{{ stat.shutouts }}</td><!--完封-->
+                                <td>{{ stat.wins }}</td>
+                                <td>{{ stat.losses }}</td><!--敗戦-->
+                                <td>{{ stat.saves }}</td>
+                                <td>{{ stat.win_percentage }}</td>
+                                <td>{{ stat.innings_pitched }}</td><!--投球回-->
+                                <td>{{ stat.hits_allowed }}</td>
+                                <td>{{ stat.home_runs_allowed }}</td><!--被本塁打-->
+                                <td>{{ stat.strikeouts }}</td>
+                                <td>{{ stat.strikeouts_per_9 }}</td><!--自責点-->
+                                <td>{{ stat.walks_allowed }}</td>
+                                <td>{{ stat.hit_batters }}</td><!--与死球-->
+                                <td>{{ stat.wild_pitches }}</td>
+                                <td>{{ stat.balks }}</td><!--ボーク-->
+                                <td>{{ stat.runs_allowed }}</td>
+                                <td>{{ stat.earned_runs }}</td><!--自責点-->
+                                <td>{{ stat.k_bb_ratio }}</td>
+                                <td>{{ stat.whip }}</td><!--WHIP-->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
