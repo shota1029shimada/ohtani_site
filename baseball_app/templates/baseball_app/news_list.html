@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}ニュース一覧{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">ニュース一覧</h1>
+    <ul class="list-group">
+        <!--記事をループし、各タイトルをリンクとして表示。-->
+        {% for article in articles %}
+        <li class="list-group-item">
+            <a href="{% url 'baseball_app:news_detail' article.id %}">
+                {{ article.article_title }}
+            </a>
+            <small class="text-muted">（{{ article.created_at|date:"Y年m月d日" }}）</small>
+        </li>
+        {% empty %}<!--記事が存在しない場合のメッセージを表示-->
+        <p>ニュース記事がありません。</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

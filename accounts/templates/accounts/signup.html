@@ -1,13 +1,54 @@
-<!-- accounts/templates/accounts/signup.html -->
-{% extends 'base.html' %}  <!-- 基本テンプレートを継承 -->
+{% extends "base.html" %}
 
-{% block title %}Signup - Ohtani Site{% endblock %}  <!-- ページタイトル -->
+{% block title %}Sign Up - Ohtani Site{% endblock %}
 
-{% block content %}  <!-- コンテンツブロック開始 -->
-<h2>Signup</h2>  <!-- 見出し -->
-<form method="post">  <!-- POSTメソッドのフォーム -->
-    {% csrf_token %}  <!-- CSRFトークン -->
-    {{ form.as_p }}  <!-- フォームを段落形式で表示 -->
-    <button type="submit" class="btn btn-primary">Signup</button>  <!-- サインアップボタン -->
-</form>  <!-- フォーム終了 -->
-{% endblock %}  <!-- コンテンツブロック終了 -->
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h2 class="h4 mb-0">新規登録</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark">登録</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p class="text-center mb-0">
+                        既にアカウントをお持ちの方は<a href="{% url 'accounts:login' %}">ログイン</a>してください。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control {
+        border-radius: 0;
+        border: 1px solid #ddd;
+    }
+    .help-text {
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}

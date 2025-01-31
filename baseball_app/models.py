@@ -92,10 +92,10 @@ class PitchingStats(models.Model):
 
 # 記事モデル
 class Article(models.Model):
-    article_title = models.CharField(max_length=30)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    article_title = models.CharField(max_length=30)#記事のタイトル
+    content = models.TextField()#記事の内容
+    created_at = models.DateTimeField(auto_now_add=True)#記事を投稿した日時
+    updated_at = models.DateTimeField(auto_now=True)#記事を編集した日時
 
     def __str__(self):
         return self.article_title
@@ -103,10 +103,19 @@ class Article(models.Model):
 
 # コメントモデル
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="comments")
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name="comments")
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="comments"
+        )#Articleモデルと1対多の関係を持つ（1つの記事に複数のコメントが付けられる）
+         #on_delete=models.CASCADEにより記事が削除されたときに関連するコメントも削除
+         #related_name="comments"により、Article側でarticle.comments.all() で関連するコメントを取得
+    user = models.ForeignKey(
+        'auth.User', on_delete=models.CASCADE, related_name="comments"
+        )# 認証ユーザー（auth.User）と1対多の関係を持つ
+        #related_name="comments" により、User側でuser.comments.all()でそのユーザーのコメント一覧を取得
+    content = models.TextField()#コメントの本文
+    created_at = models.DateTimeField(auto_now_add=True)# コメントの投稿日時
 
     def __str__(self):
         return f"{self.user.username}: {self.content[:20]}..."
+    #{self.user.username} で コメントしたユーザーの名前を取得
+    #{self.content[:20]} で コメントの最初の20文字を表示

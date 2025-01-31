@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}コメント編集{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">コメントを編集</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="{% url 'baseball_app:news_detail' article.id %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+</div>
+{% endblock %}

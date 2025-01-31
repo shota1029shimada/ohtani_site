@@ -1,13 +1,42 @@
-<!-- templates/registration/login.html -->
-{% extends 'base.html' %}  <!-- 基本テンプレートを継承 -->
+{% extends "base.html" %}
 
-{% block title %}Login - Ohtani Site{% endblock %}  <!-- ページタイトル -->
+{% block title %}Login - Ohtani Site{% endblock %}
 
-{% block content %}  <!-- コンテンツブロック開始 -->
-<h2>Login</h2>  <!-- 見出し -->
-<form method="post">  <!-- POSTメソッドのフォーム -->
-    {% csrf_token %}  <!-- CSRFトークン -->
-    {{ form.as_p }}  <!-- フォームを段落形式で表示 -->
-    <button type="submit" class="btn btn-primary">Login</button>  <!-- ログインボタン -->
-</form>  <!-- フォーム終了 -->
-{% endblock %}  <!-- コンテンツブロック終了 -->
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h2 class="h4 mb-0">ログイン</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            ユーザー名またはパスワードが正しくありません。
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">ユーザー名</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">パスワード</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-dark">ログイン</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p class="text-center mb-0">
+                        アカウントをお持ちでない方は<a href="{% url 'accounts:signup' %}">新規登録</a>してください。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

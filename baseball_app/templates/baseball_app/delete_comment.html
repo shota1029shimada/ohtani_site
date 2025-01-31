@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}コメント削除{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">コメントを削除</h1>
+    <p>本当にこのコメントを削除しますか？</p>
+    <blockquote class="blockquote">
+        <p class="mb-0">{{ comment.content }}</p>
+        <footer class="blockquote-footer">{{ comment.user.username }}</footer>
+    </blockquote>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">削除</button>
+        <a href="{% url 'baseball_app:news_detail' article.id %}" class="btn btn-secondary">キャンセル</a>
+    </form>
+</div>
+{% endblock %}

@@ -103,7 +103,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-
+LOGIN_REDIRECT_URL = 'baseball_app:index'
+LOGOUT_REDIRECT_URL = 'baseball_app:index'
+LOGIN_URL = 'accounts:login'
 
 STATIC_URL = 'static/'
 MEDIA_URL='/media/'#画像ファイルを呼び出すファイル
