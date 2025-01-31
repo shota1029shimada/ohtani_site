@@ -96,7 +96,11 @@ class Article(models.Model):
     content = models.TextField()#記事の内容
     created_at = models.DateTimeField(auto_now_add=True)#記事を投稿した日時
     updated_at = models.DateTimeField(auto_now=True)#記事を編集した日時
-
+    favorites = models.ManyToManyField(
+        'auth.User', 
+        related_name="favorite_articles", 
+        blank=True
+    )  # お気に入り登録したユーザー（多対多）
     def __str__(self):
         return self.article_title
 

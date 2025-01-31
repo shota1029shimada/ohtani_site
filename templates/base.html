@@ -24,6 +24,7 @@
                     <li class="nav-item"><a href="{% url 'baseball_app:player_profile' %}" class="nav-link text-white">Profile</a></li>
                     <li class="nav-item"><a href="{% url 'baseball_app:baseball_basics' %}" class="nav-link text-white">Basics</a></li>
                     <li class="nav-item"><a href="{% url 'baseball_app:news_list' %}" class="nav-link text-white">News</a></li>
+                    <li class="nav-item"><a href="{% url 'baseball_app:favorite_list' %}" class="nav-link text-white">Favorites</a></li>
                     <li class="nav-item"><a href="{% url 'baseball_app:contact' %}" class="nav-link text-white">Contact</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">

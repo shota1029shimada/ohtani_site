@@ -10,6 +10,19 @@
         <p>{{ article.content }}</p>
     </div>
 
+    <!-- お気に入りボタン -->
+    {% if user.is_authenticated %}
+    <button id="favorite-btn" data-favorited="{{ is_favorited }}">
+        {% if is_favorited %}
+            お気に入り解除
+        {% else %}
+            お気に入り追加
+        {% endif %}
+    </button>
+    {% else %}
+    <p>ログインするとお気に入り機能が利用できます。</p>
+    {% endif %}
+
     <!-- コメント一覧 -->
     <h2 class="h4 mb-3">コメント一覧</h2>
     {% if comments %}
@@ -60,4 +73,22 @@
     {% endif %}
 </li>
 {% endfor %}
+
+<script>
+    const favoriteBtn = document.getElementById('favorite-btn');
+    favoriteBtn.addEventListener('click', () => {
+        const favorited = favoriteBtn.dataset.favorited === 'true';
+        fetch("{% url 'baseball_app:toggle_favorite' article.id %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            favoriteBtn.dataset.favorited = data.favorited;
+            favoriteBtn.textContent = data.favorited ? 'お気に入り解除' : 'お気に入り追加';
+        });
+    });
+</script>
 {% endblock %}

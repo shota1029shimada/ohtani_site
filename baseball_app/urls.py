@@ -22,6 +22,8 @@ urlpatterns = [
     path('news/<int:pk>/', views.news_detail, name='news_detail'), #ニュース詳細ページ
     path('news/<int:pk>/comment/edit/<int:comment_pk>/', views.edit_comment, name='edit_comment'), #コメント編集
     path('news/<int:pk>/comment/delete/<int:comment_pk>/', views.delete_comment, name='delete_comment'),  # コメント削除
+    path('news/<int:pk>/favorite/', views.toggle_favorite, name='toggle_favorite'),  # お気に入り追加/削除
+    path('favorites/', views.favorite_list, name='favorite_list'),  # お気に入り一覧
     path('contact/', views.contact, name='contact'),  # お問い合わせ
 ]
 

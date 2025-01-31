@@ -6,6 +6,8 @@ from .forms import CommentForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 # APIの取得コード
 from .serializers import PlayerSerializer, BattingStatsSerializer, PitchingStatsSerializer
@@ -59,6 +61,7 @@ def news_list(request):
 def news_detail(request, pk):#記事のpkを受け取る
     article = get_object_or_404(Article, pk=pk)
     comments = article.comments.all()# 記事に関するコメントをarticleテーブルからデータをすべて取得
+    is_favorited = request.user in article.favorites.all() if request.user.is_authenticated else False
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -75,6 +78,7 @@ def news_detail(request, pk):#記事のpkを受け取る
         'article': article,
         'comments': comments,
         'form': form,
+        'is_favorited': is_favorited
     })
 
 #コメント編集
@@ -117,6 +121,25 @@ def delete_comment(request, pk, comment_pk):
         'article': article,
         'comment': comment
     })
+
+#お気に入り追加/削除の処理 
+@login_required
+def toggle_favorite(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    if request.user in article.favorites.all():
+        article.favorites.remove(request.user)  # お気に入りから削除
+        favorited = False
+    else:
+        article.favorites.add(request.user)  # お気に入りに追加
+        favorited = True
+    return JsonResponse({'favorited': favorited})
+
+#お気に入り一覧の表示
+@login_required
+def favorite_list(request):
+    favorites = request.user.favorite_articles.all()
+    return render(request, 'baseball_app/favorite_list.html', {'favorites': favorites})
+
     
 def contact(request):
     return render(request, 'baseball_app/contact.html')
